@@ -17,8 +17,8 @@
 // Version: 1.2
 // Updated: 2012-4-11
 
-var REPLY_TYPE = 1;  //TODO:评论显示方式. 1；Tooltip; 2：插入到评论上方�：点击跳转到父评�
-var REPLY_COUNT = 2;  //只显示最靠近的两条评�
+var REPLY_TYPE = 1;  //TODO:评论显示方式. 1；Tooltip; 2：插入到评论上方；3：点击跳转到父评论
+var REPLY_COUNT = 2;  //只显示最靠近的两条评论
 
 document.addEventListener('mouseover',function(e){
 	var	link = e.target;
@@ -33,7 +33,7 @@ document.addEventListener('mouseover',function(e){
 
 			if (contentArray.length > REPLY_COUNT) {
 				for (var i = 0; i < REPLY_COUNT; i ++ ) {
-					content = content + "<p style='padding-bottom:5px;border-bottom:1px dashed rgba(20,150,190,0.3);'>" + contentArray[contentArray.length - REPLY_COUNT + i] + "</p>";
+					content = content + "<p style='padding-bottom:5px;border-bottom:1px solid rgb(226, 226, 226);'>" + contentArray[contentArray.length - REPLY_COUNT + i] + "</p>";
 				}
 			}
 			else{
@@ -94,7 +94,7 @@ function creatDiv(content){
 		document.body.appendChild(layer);
 		layer.setAttribute("id","ReplyToolTip");
 		layer.setAttribute("class","box");
-		layer.setAttribute("style","font-size:14px;background-color:rgba(255,255,255,0.9);box-shadow:0 0 10px rgba(0, 0, 0, 0.8);max-width:550px;max-height:500px;padding:6px 10px;position:absolute;")
+		layer.setAttribute("style","font-size:14px;background-color:rgba(255,255,255,0.8);box-shadow:0 0 10px rgba(0, 0, 0, 0.8);max-width:550px;max-height:500px;padding:6px 10px;position:absolute;")
 		layer.innerHTML = content;
 	}
 	return layer;
