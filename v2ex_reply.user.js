@@ -13,12 +13,12 @@
 // ==/UserScript==
 
 // Author: caoyue (http://caoyue.me)
-// Created: 2012-04-11
-// Version: 1.0
+// Created: 2012-04-10
+// Version: 1.1
 // Updated: 2012-4-11
 
-var REPLY_TYPE = 1; //TODO:评论显示方式. 1；Tooltip; 2：插入到评论上方；3：点击跳转到父评论
-
+var REPLY_TYPE = 1;  //TODO:评论显示方式. 1；Tooltip; 2：插入到评论上方；3：点击跳转到父评论
+var REPLY_COUNT = 2;  //只显示最靠近的两条评论
 
 document.addEventListener('mouseover',function(e){
 	var	link = e.target;
@@ -27,10 +27,18 @@ document.addEventListener('mouseover',function(e){
 		if (authorLink.innerHTML != undefined) {
 			var originID = authorLink.parentNode.parentNode.getElementsByTagName("div")[0].id.split("_")[1];
 			var authorName = authorLink.innerHTML;
-			var content = "<strong>" + authorName + ":</strong><br />" +  getContent(originID,authorName);
-			if (content.length >2000) {
-				content = content.substr(content.length - 2000 ,2000);
+
+			var contentArray = getContent(originID,authorName);
+			var content = "<strong>" + authorName + ":</strong><br />";
+
+			if (contentArray.length >= 2) {
+				for (var i = 0; i < REPLY_COUNT; i ++ ) {
+					content = content + "<p style='padding-bottom:5px;border-bottom:1px dashed rgba(20,150,190,0.3);'>" + contentArray[contentArray.length - i - 1] + "</p>";
+				}
 			}
+			else
+				content = content + "<p style='padding-bottom:5px;border-bottom:1px dashed rgba(20,150,190,0.3);'>" + contentArray[0] + "</p>";
+
 			var layer = creatDiv(content);
 
 			layer.style.display = 'block';
@@ -57,7 +65,7 @@ function getAuthor(link){
 }
 
 function getContent(originID,authorName){
-	var content = "",x;
+	var contentArray = new Array(),x;
 	var replys = document.getElementById("replies").getElementsByClassName("reply_content");
 	for (x in replys) {
 		var reply = replys[x];
@@ -65,13 +73,13 @@ function getContent(originID,authorName){
 			var replyID = reply.parentNode.getElementsByClassName("fr")[0].id.split("_")[1];
 			var replyAuthor = reply.parentNode.getElementsByClassName("dark")[0].innerHTML;	
 			if (replyID < originID && replyAuthor == authorName) {
-				content = content + "<p style='padding-bottom:5px;border-bottom:1px dashed rgba(20,150,190,0.3);'>" + reply.innerHTML + "</p>";
+				if (reply.innerHTML != "") {
+					contentArray.push(reply.innerHTML);
+				}
 			}
 		}
-		else
-			content = content + "";
 	}
-	return content;
+	return contentArray;
 }
 
 function creatDiv(content){
