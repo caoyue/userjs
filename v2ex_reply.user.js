@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             caoyue@v2ex
 // @name           V2EX_Reply
-// @version        1.0
+// @version        1.1
 // @namespace      caoyue
 // @author         caoyue
 // @description    v2ex reply
