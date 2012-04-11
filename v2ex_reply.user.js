@@ -34,8 +34,8 @@ document.addEventListener('mouseover',function(e){
 			var layer = creatDiv(content);
 
 			layer.style.display = 'block';
-			layer.style.left = "280px";
-			layer.style.top = e.pageY - layer.offsetHeight - 20 + "px";
+			layer.style.left = e.pageX - 60 + "px";
+			layer.style.top = e.pageY - layer.offsetHeight - 15 + "px";
 		}
 	}
 });
