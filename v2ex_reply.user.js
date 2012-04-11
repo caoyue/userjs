@@ -17,8 +17,8 @@
 // Version: 1.2
 // Updated: 2012-4-11
 
-var REPLY_TYPE = 1;  //TODO:评论显示方式. 1；Tooltip; 2：插入到评论上方；3：点击跳转到父评论
-var REPLY_COUNT = 2;  //只显示最靠近的两条评论
+var REPLY_TYPE = 1;  //TODO:评论显示方式. 1；Tooltip; 2：插入到评论上方�：点击跳转到父评�
+var REPLY_COUNT = 2;  //只显示最靠近的两条评�
 
 document.addEventListener('mouseover',function(e){
 	var	link = e.target;
