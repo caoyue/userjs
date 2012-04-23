@@ -1,23 +1,21 @@
 // ==UserScript==
 // @id             caoyue@v2ex
 // @name           V2EX_Reply
-// @version        1.3
+// @version        1.4
 // @namespace      caoyue
 // @author         caoyue
 // @description    v2ex reply
-// @include        https://www.v2ex.com/t/*
-// @include        http://www.v2ex.com/t/*
-// @include        https://us.v2ex.com/t/*
-// @include        http://us.v2ex.com/t/*
+// @include        https://*.v2ex.com/t/*
+// @include        http://*.v2ex.com/t/*
 // @run-at         document-end
 // ==/UserScript==
 
 // Author: caoyue (http://caoyue.me)
 // Created: 2012-04-11
-// Version: 1.3
-// Updated: 2012-4-11
+// Version: 1.4
+// Updated: 2012-4-23
 
-var REPLY_TYPE = 1;  //TODO:评论显示方式. 1；Tooltip; 2：插入到评论上方；3：点击跳转到父评论
+var REPLY_TYPE = 1;  //TODO:评论显示方式. 
 var REPLY_COUNT = 2;  //只显示最靠近的两条评论
 
 document.addEventListener('mouseover',function(e){
@@ -25,7 +23,7 @@ document.addEventListener('mouseover',function(e){
 	if(link.nodeName.toLowerCase()=='a'){
 		var authorLink = getAuthor(link);
 		if (authorLink.innerHTML != undefined) {
-			var originID = authorLink.parentNode.parentNode.getElementsByTagName("div")[0].id.split("_")[1];
+			var originID = authorLink.parentNode.parentNode.getElementsByClassName("no")[0].innerHTML;
 			var authorName = authorLink.innerHTML;
 
 			var contentArray = getContent(originID,authorName);
@@ -45,7 +43,7 @@ document.addEventListener('mouseover',function(e){
 			var layer = creatDiv(content);
 			layer.style.display = 'block';
 			layer.style.left = e.pageX - 60 + "px";
-			layer.style.top = e.pageY - layer.offsetHeight - 20 + "px";
+			layer.style.top = e.pageY - layer.offsetHeight - 15 + "px";
 		}
 	}
 });
@@ -68,11 +66,11 @@ function getAuthor(link){
 
 function getContent(originID,authorName){
 	var contentArray = new Array(),x;
-	var replys = document.getElementById("replies").getElementsByClassName("reply_content");
+	var replys = document.getElementById("Main").getElementsByClassName("reply_content");
 	for (x in replys) {
 		var reply = replys[x];
 		if (reply.parentNode != undefined) {
-			var replyID = reply.parentNode.getElementsByClassName("fr")[0].id.split("_")[1];
+			var replyID = reply.parentNode.getElementsByClassName("no")[0].innerHTML;
 			var replyAuthor = reply.parentNode.getElementsByClassName("dark")[0].innerHTML;	
 			if (replyID < originID && replyAuthor == authorName) {
 				if (reply.innerHTML != "") {
