@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             caoyue@v2ex
 // @name           V2EX_Reply
-// @version        1.4.1
+// @version        1.4.2
 // @namespace      caoyue
 // @author         caoyue
 // @description    v2ex reply
@@ -10,13 +10,14 @@
 // @run-at         document-end
 // ==/UserScript==
 
-// Author: caoyue (http://caoyue.me)
+// Author: caoyue
 // Created: 2012-04-11
-// Version: 1.4.1
+// Version: 1.4.2
 // Updated: 2012-4-25
 
 var REPLY_TYPE = 1;  //TODO:评论显示方式. 
 var REPLY_COUNT = 2;  //只显示最靠近的两条评论
+var HIDE_TOPIC_CONTENT = true; //翻页后隐藏主题内容
 
 document.addEventListener('mouseover',function(e){
 	var	link = e.target;
@@ -96,4 +97,9 @@ function creatDiv(content){
 		layer.innerHTML = content;
 	}
 	return layer;
+}
+
+// 翻页后隐藏主题内容
+if(HIDE_TOPIC_CONTENT &&window.location.href.indexOf("?p=") >0 && window.location.href.indexOf("?p=1") == -1){
+    document.getElementsByClassName("topic_content")[0].setAttribute("style","display:none;");
 }
