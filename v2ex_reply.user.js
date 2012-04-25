@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             caoyue@v2ex
 // @name           V2EX_Reply
-// @version        1.4
+// @version        1.4.1
 // @namespace      caoyue
 // @author         caoyue
 // @description    v2ex reply
@@ -12,8 +12,8 @@
 
 // Author: caoyue (http://caoyue.me)
 // Created: 2012-04-11
-// Version: 1.4
-// Updated: 2012-4-23
+// Version: 1.4.1
+// Updated: 2012-4-25
 
 var REPLY_TYPE = 1;  //TODO:评论显示方式. 
 var REPLY_COUNT = 2;  //只显示最靠近的两条评论
@@ -71,8 +71,9 @@ function getContent(originID,authorName){
 		var reply = replys[x];
 		if (reply.parentNode != undefined) {
 			var replyID = reply.parentNode.getElementsByClassName("no")[0].innerHTML;
+			//GM_log("replyID is " + replyID + " and originID is " + originID);
 			var replyAuthor = reply.parentNode.getElementsByClassName("dark")[0].innerHTML;	
-			if (replyID < originID && replyAuthor == authorName) {
+			if (parseInt(replyID) < parseInt(originID) && replyAuthor == authorName) {
 				if (reply.innerHTML != "") {
 					contentArray.push(reply.innerHTML);
 				}
