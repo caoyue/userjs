@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             caoyue@v2ex
 // @name           V2EX_Reply
-// @version        1.4.2
+// @version        1.4.3
 // @namespace      caoyue
 // @author         caoyue
 // @description    v2ex reply
@@ -12,11 +12,12 @@
 
 // Author: caoyue
 // Created: 2012-04-11
-// Version: 1.4.2
+// Version: 1.4.3
 // Updated: 2012-4-25
 
 var REPLY_TYPE = 1;  //TODO:评论显示方式. 
 var REPLY_COUNT = 2;  //只显示最靠近的两条评论
+var MAX_LENGTH = 120; //引用评论超过长度则截断
 var HIDE_TOPIC_CONTENT = true; //翻页后隐藏主题内容
 
 document.addEventListener('mouseover',function(e){
@@ -76,7 +77,11 @@ function getContent(originID,authorName){
 			var replyAuthor = reply.parentNode.getElementsByClassName("dark")[0].innerHTML;	
 			if (parseInt(replyID) < parseInt(originID) && replyAuthor == authorName) {
 				if (reply.innerHTML != "") {
-					contentArray.push(reply.innerHTML);
+				    if (reply.innerHTML.length > MAX_LENGTH) {
+				       contentArray.push(reply.innerHTML.substring(0,MAX_LENGTH) + "<br /><span style='color:gray;'> ……</span>" );         
+				    }
+				    else
+					   contentArray.push(reply.innerHTML);
 				}
 			}
 		}
