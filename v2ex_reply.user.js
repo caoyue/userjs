@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             caoyue@v2ex
 // @name           V2EX_Reply
-// @version        1.4.3
+// @version        1.5
 // @namespace      caoyue
 // @author         caoyue
 // @description    v2ex reply
@@ -12,8 +12,8 @@
 
 // Author: caoyue
 // Created: 2012-04-11
-// Version: 1.4.3
-// Updated: 2012-4-25
+// Version: 1.5
+// Updated: 2012-5-11
 
 var REPLY_TYPE = 1;  //TODO:评论显示方式. 
 var REPLY_COUNT = 2;  //只显示最靠近的两条评论
@@ -107,4 +107,11 @@ function creatDiv(content){
 // 翻页后隐藏主题内容
 if(HIDE_TOPIC_CONTENT &&window.location.href.indexOf("?p=") >0 && window.location.href.indexOf("?p=1") == -1){
     document.getElementsByClassName("topic_content")[0].setAttribute("style","display:none;");
+}
+
+// 感谢回复者时先确认
+var thankareas = document.getElementsByClassName("thank");
+for (var x in thankareas){
+    var func = thankareas[x].getAttribute("onclick");
+    thankareas[x].setAttribute("onclick","if(confirm('予人玫瑰，手有余香')){ "+func+ "}");
 }
