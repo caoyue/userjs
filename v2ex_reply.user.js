@@ -5,8 +5,8 @@
 // @namespace      caoyue
 // @author         caoyue
 // @description    v2ex reply
-// @include        https://*.v2ex.com/t/*
-// @include        http://*.v2ex.com/t/*
+// @include        https://*v2ex.com/t/*
+// @include        http://*v2ex.com/t/*
 // @run-at         document-end
 // ==/UserScript==
 
