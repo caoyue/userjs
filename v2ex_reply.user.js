@@ -1,24 +1,36 @@
 // ==UserScript==
 // @id             caoyue@v2ex
 // @name           V2EX_Reply
-// @version        1.5
+// @version        1.6
 // @namespace      caoyue
 // @author         caoyue
 // @description    v2ex reply
-// @include        https://*v2ex.com/t/*
-// @include        http://*v2ex.com/t/*
-// @run-at         document-end
+// @include        http://www.v2ex.com
+// @include        https://*.v2ex.com/t/*
+// @include        http://*.v2ex.com/t/*
+// @include        https://v2ex.com/t/*
+// @include        http://v2ex.com/t/*
+// @downloadURL	https://userscripts.org/scripts/source/130643.user.js
+// @updateURL	https://userscripts.org/scripts/source/130643.meta.js
 // ==/UserScript==
 
 // Author: caoyue
 // Created: 2012-04-11
-// Version: 1.5
-// Updated: 2012-5-11
+// Version: 1.6
+// Updated: 2013-02-05
 
-var REPLY_TYPE = 1;  //TODO:评论显示方式. 
+
+var REPLY_TYPE = 1;  //TODO:评论显示方式.
 var REPLY_COUNT = 2;  //只显示最靠近的两条评论
-var MAX_LENGTH = 120; //引用评论超过长度则截断
-var HIDE_TOPIC_CONTENT = true; //翻页后隐藏主题内容
+var MAX_LENGTH = 300; //引用评论超过长度则截断
+var HIDE_TOPIC_CONTENT = false; //翻页后隐藏主题内容
+var REDIRECT = false; // www 自动跳转到裸域
+
+(function (){
+    if(REDIRECT && location.host == "www.v2ex.com"){
+        location.href = location.href.replace(/www./, '');
+    }
+})();
 
 document.addEventListener('mouseover',function(e){
 	var	link = e.target;
@@ -57,7 +69,7 @@ document.addEventListener('mouseout',function(e){
 });
 
 
-function getAuthor(link){	
+function getAuthor(link){
 	var authorLink = "none";
 	var rex = /\/member\//;
 	if (rex.test(link) && link.className != "dark") {
@@ -74,11 +86,11 @@ function getContent(originID,authorName){
 		if (reply.parentNode != undefined) {
 			var replyID = reply.parentNode.getElementsByClassName("no")[0].innerHTML;
 			//GM_log("replyID is " + replyID + " and originID is " + originID);
-			var replyAuthor = reply.parentNode.getElementsByClassName("dark")[0].innerHTML;	
-			if (parseInt(replyID) < parseInt(originID) && replyAuthor == authorName) {
+			var replyAuthor = reply.parentNode.getElementsByClassName("dark")[0].innerHTML;
+			if (parseInt(replyID) < parseInt(originID) && replyAuthor.toLowerCase() == authorName.toLowerCase()) {
 				if (reply.innerHTML != "") {
 				    if (reply.innerHTML.length > MAX_LENGTH) {
-				       contentArray.push(reply.innerHTML.substring(0,MAX_LENGTH) + "<br /><span style='color:gray;'> ……</span>" );         
+				       contentArray.push(reply.innerHTML.substring(0,MAX_LENGTH) + "<br /><span style='color:gray;'> ……</span>" );
 				    }
 				    else
 					   contentArray.push(reply.innerHTML);
@@ -105,7 +117,7 @@ function creatDiv(content){
 }
 
 // 翻页后隐藏主题内容
-if(HIDE_TOPIC_CONTENT &&window.location.href.indexOf("?p=") >0 && window.location.href.indexOf("?p=1") == -1){
+if(HIDE_TOPIC_CONTENT && window.location.href.indexOf("?p=") >0 && window.location.href.indexOf("?p=1") == -1){
     document.getElementsByClassName("topic_content")[0].setAttribute("style","display:none;");
 }
 
