@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             caoyue@v2ex
 // @name           V2EX_Helper
-// @version        1.7
+// @version        1.7.1
 // @namespace      caoyue
 // @author         caoyue
 // @description    v2ex helper
@@ -17,17 +17,16 @@
 // ==/UserScript==
 // Author: caoyue
 // Created: 2012-04-11
-// Version: 1.6 2013-02-05
-// Updated: 2015-01-17
+// Version: 1.7.1
+// Updated: 2015-01-21
 
 var REPLY_TYPE = 1; //TODO:评论显示方式.
 var REPLY_COUNT = 2; //只显示最靠近的两条评论
 var MAX_LENGTH = 300; //引用评论超过长度则截断
 var HIDE_TOPIC_CONTENT = false; //翻页后隐藏主题内容
 var REDIRECT = false; // www 自动跳转到裸域
+var CUSTOM_SEARCH = false;
 
-//var SEARCH = "http://www.google.com/search?q=site:v2ex.com/t%20{{0}}"; //default
-var SEARCH = 'https://www.bing.com/search?q=site%3Av2ex.com%2Ft+{{0}}'; //自定义搜索引擎
 
 (function () {
     if (REDIRECT && location.host == 'www.v2ex.com') {
@@ -35,18 +34,23 @@ var SEARCH = 'https://www.bing.com/search?q=site%3Av2ex.com%2Ft+{{0}}'; //自定
     }
 }) ();
 
-document.forms[0].onsubmit = function () {
-    var q = document.getElementById('q');
-    if (q.value != '') {
-        var url = SEARCH.replace(/\{\{0\}\}/i, q.value);
-        if (navigator.userAgent.indexOf('iPad') > - 1 || navigator.userAgent.indexOf('iPhone') > - 1 || navigator.userAgent.indexOf('iPhone') > - 1) {
-            location.href = url;
-        } else {
-            window.open(url, '_blank');
+if (CUSTOM_SEARCH) {
+    //var SEARCH = "http://www.google.com/search?q=site:v2ex.com/t%20{{0}}"; //default
+    var SEARCH = 'https://www.bing.com/search?q=site%3Av2ex.com%2Ft+{{0}}'; //自定义搜索引擎
+    document.forms[0].onsubmit = function () {
+        var q = document.getElementById('q');
+        if (q.value != '') {
+            var url = SEARCH.replace(/\{\{0\}\}/i, q.value);
+            if (navigator.userAgent.indexOf('iPad') > - 1 || navigator.userAgent.indexOf('iPhone') > - 1 || navigator.userAgent.indexOf('iPhone') > - 1) {
+                location.href = url;
+            } else {
+                window.open(url, '_blank');
+            }
         }
+        return false;
     }
-    return false;
-}
+};
+
 
 if (location.href.indexOf('v2ex.com/t') > 0) {
     reply();
