@@ -1,18 +1,15 @@
 
 Greasemonkey Scripts
 ===============================
-
-### Image_Info.user.js
-快速查看图片信息
-![Image_Info.user.js](http://ww2.sinaimg.cn/large/3e69b0ccgw1eoh0xsws5sj20l90a83z5.jpg)
-
-### simple_search_jump.user.js
-搜索引擎快速跳转
+### v2ex.k
+- 原作者 kokdemo@v2ex
+- 修改自原 Chrome Extension [https://github.com/kokdemo/v2ex.k](https://github.com/kokdemo/v2ex.k)
+- 一切权利归原作者所有
 
 ### v2ex_helper.user.js
 - 显示引用的评论<br/>
   选项：
-  
+
   ```javascript
   var REPLY_COUNT = 2; //只显示最靠近的两条评论
   var MAX_LENGTH = 300; //引用评论超过长度则截断
@@ -35,3 +32,11 @@ Greasemonkey Scripts
 
   ```
 - 感谢回复增加一个确认弹出框<br/>
+
+### Image_Info.user.js
+快速查看图片信息
+![Image_Info.user.js](http://ww2.sinaimg.cn/large/3e69b0ccgw1eoh0xsws5sj20l90a83z5.jpg)
+
+### simple_search_jump.user.js
+搜索引擎快速跳转
+
