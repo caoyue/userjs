@@ -6,6 +6,10 @@ Greasemonkey Scripts
 - 修改自原 Chrome Extension [https://github.com/kokdemo/v2ex.k](https://github.com/kokdemo/v2ex.k)
 - 一切权利归原作者所有
 
+  ```javascript
+  var USE_AJAX = true;  //默认为 Ajax 加载，设为 false 为 iframe 加载
+  ```
+
 ### v2ex_helper.user.js
 - 显示引用的评论<br/>
   选项：
