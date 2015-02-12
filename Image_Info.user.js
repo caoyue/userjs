@@ -4,14 +4,14 @@
 // @version           1.2
 // @description    Display Image Info in Image Title
 // @license    GPL v3 or later version
-// @downloadURL	https://userscripts.org/scripts/source/93679.user.js
-// @updateURL	https://userscripts.org/scripts/source/93679.meta.js
+// @downloadURL	https://github.com/caoyue/userjs/raw/master/Image_Info.user.js
+// @updateURL	https://github.com/caoyue/userjs/raw/master/Image_Info.meta.js
 // @include        *
 // ==/UserScript==
 
 /*
 *    v1.0
-*    Base64 image 
+*    Base64 image
 *    long url cut
 *    v1.1
 *    Image width limit

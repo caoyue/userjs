@@ -8,7 +8,8 @@
 // @include        *www.baidu.com/*
 // @include        *.google.*
 // @include        *bing.com/*
-// @downloadURL    https://raw.githubusercontent.com/caoyue/userjs/master/simple_search_jump.user.js
+// @downloadURL    https://github.com/caoyue/userjs/raw/master/simple_search_jump.user.js
+// @updateURL      https://github.com/caoyue/userjs/raw/master/simple_search_jump.meta.js
 // @grant       none
 // @note        last updated 2015-01-11
 // @note        tested on Chrome 40 + Tampermonkey， Firefox 35 + GreaseMonkey
@@ -16,7 +17,7 @@
 
 
 (function () {
-    
+
     SEARCH_DICT = {
         'Google': 'https://google.com/search?newwindow=1&q={0}&oq={0}',
         'DDG': 'https://duckduckgo.com/?q={0}',
@@ -25,11 +26,11 @@
         'SO': 'http://stackoverflow.com/search?q={0}',
         'Weibo': 'http://s.weibo.com/weibo/{0}',
         'Twitter': 'https://twitter.com/search?q={0}'
-    } 
+    }
 
 /*********************************************************************
 * Google 和 Baidu 使用了 Ajax 无刷新加载页面，探测页面刷新比较麻烦；
-* 而且同时存在几种刷新方式，尝试过了 onhashchange / history.pushState / 
+* 而且同时存在几种刷新方式，尝试过了 onhashchange / history.pushState /
 * 监视 DOMNodeInserted / 监视页面 TitleObserver 等，没有找到通用高效的处理方法；
 * 于是使用了简单暴力无脑的 setInterval (￣△￣|||)
 * 求其他方法XD
@@ -37,12 +38,12 @@
     Init(2000);
 
 //     window.addEventListener("load", TitleObserver, false);
-  
+
 //     window.onhashchange = function(){
 //         Init();
 //     }
-    
-    
+
+
 }) ();
 
 // function TitleObserver() {
@@ -53,7 +54,7 @@
 //         childList: true,
 //         characterData: false,
 //         subtree: false
-//     };   
+//     };
 //     observer.observe(document.title, config);
 // }
 
@@ -64,15 +65,15 @@ function Init(time) {
     setInterval(function () {
       BaiduInit();
     }, time);
-  } 
+  }
   else if (host.indexOf('.google.') > 0) {
     setInterval(function () {
       GoogleInit();
     }, time);
-  } 
+  }
   else if (host.indexOf('bing.com') > 0) {
     BingInit();
-  } 
+  }
   else {
     //
   }
@@ -81,23 +82,23 @@ function Init(time) {
 // function Init() {
 //     console.log(document.title);
 //     setTimeout(function () {
-        
+
 //         var host = window.location.host;
 //         if (host.indexOf('baidu.com') > 1) {
 //             BaiduInit();
-//         } 
+//         }
 //         else if (host.indexOf('.google.') > 0) {
 //             GoogleInit();
-//         } 
+//         }
 //             else if (host.indexOf('bing.com') > 0) {
 //                 BingInit();
-//             } 
+//             }
 //             else {
 //                 //
 //             }
-        
+
 //     },1000);
-    
+
 // }
 
 
@@ -110,7 +111,7 @@ function BaiduInit() {
             var jump = document.getElementById(key + 'Jump');
             if (jump != null) {
                 jump.href = kurl;
-            } 
+            }
             else {
                 jump = document.createElement('a');
                 jump.id = key + 'Jump';
@@ -133,7 +134,7 @@ function GoogleInit() {
             var url = SEARCH_DICT[key].replace(/\{0\}/g, keyword);
             if (jump != null) {
                 jump.href = url;
-            } 
+            }
             else {
                 var d = document.createElement('div');
                 if (t != null) {
@@ -162,7 +163,7 @@ function BingInit() {
             var url = SEARCH_DICT[key].replace(/\{0\}/g, keyword);
             if (jump != null) {
                 jump.href = url;
-            } 
+            }
             else {
                 if (t != null) {
                     var d = document.createElement('li');

@@ -10,7 +10,8 @@
 // @include        http://*.v2ex.com/*
 // @include        https://v2ex.com/*
 // @include        http://v2ex.com/*
-// @downloadURL	   https://github.com/caoyue/userjs/raw/master/v2ex_helper.user.js
+// @downloadURL    https://github.com/caoyue/userjs/raw/master/v2ex_helper.user.js
+// @updateURL      https://github.com/caoyue/userjs/raw/master/v2ex_helper.meta.js
 // @grant          none
 
 

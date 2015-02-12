@@ -12,12 +12,15 @@
 // @include        http://v2ex.com/*
 // @require        http://cdn.v2ex.com/static/js/jquery.js
 // @downloadURL    https://github.com/caoyue/userjs/raw/master/v2ex.k.user.js
+// @updateURL      https://github.com/caoyue/userjs/raw/master/v2ex.k.meta.js
 // @resource   v2ex.k.font  https://raw.githubusercontent.com/kokdemo/v2ex.k/64b4551ed10c9765edf3a167d1dfd4b9be5ba2aa/css/font.css
 // @resource   v2ex.k.css   https://raw.githubusercontent.com/kokdemo/v2ex.k/64b4551ed10c9765edf3a167d1dfd4b9be5ba2aa/css/v2ex.k.css
 // @noframes
 // @grant          GM_getResourceText
 // @grant          GM_addStyle
-// @grant          GM_xmlhttpRequest
+// @grant          GM_registerMenuCommand
+// @grant          GM_setValue
+// @grant          GM_getValue
 // ==/UserScript==
 
 // 原作者 kokdemo@v2ex
@@ -25,11 +28,19 @@
 // 一切权利归原作者所有
 // Updated: 2015-02-12
 
+// register command
+GM_registerMenuCommand('v2ex.k - Use Ajax', useAjax, 'a');
+GM_registerMenuCommand('v2ex.k - Use iframe', useIframe, 's');
+function useAjax() {
+  GM_setValue('useAjax', true);
+  location.reload();
+}
+function useIframe() {
+  GM_setValue('useAjax', false);
+  location.reload();
+}
+USE_AJAX = GM_getValue('useAjax');
 
-var USE_AJAX = true;
-
-
-//
 var GM_addStyle = GM_addStyle || function (css) {
   var style = document.createElement('style');
   style.setAttribute('type', 'text/css');
@@ -38,7 +49,6 @@ var GM_addStyle = GM_addStyle || function (css) {
 };
 GM_addStyle(GM_getResourceText('v2ex.k.font'));
 GM_addStyle(GM_getResourceText('v2ex.k.css'));
-
 var navbar = $('#Top .content a');
 var newNavbar = '<div id=\'k_navbar\' class=\'bars k_color_dark\'></div><div id=\'k_tabbar\' class=\'bars k_color_light\'></div>';
 if ($('#Rightbar .box .cell table tbody tr td').length != 0) {
