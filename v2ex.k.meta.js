@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             caoyue@v2ex
 // @name           v2ex.k
-// @version        0.1.2
+// @version        0.1.2.1
 // @namespace      caoyue
 // @author         caoyue
 // @description   Get a better UI of V2EX.

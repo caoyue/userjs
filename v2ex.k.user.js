@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             caoyue@v2ex
 // @name           v2ex.k
-// @version        0.1.2
+// @version        0.1.2.1
 // @namespace      caoyue
 // @author         caoyue
 // @description   Get a better UI of V2EX.
@@ -53,7 +53,7 @@ var navbar = $('#Top .content a');
 var newNavbar = '<div id=\'k_navbar\' class=\'bars k_color_dark\'></div><div id=\'k_tabbar\' class=\'bars k_color_light\'></div>';
 if ($('#Rightbar .box .cell table tbody tr td').length != 0) {
   var avater = $('#Rightbar .box .cell table tbody tr td') [0].innerHTML;
-  var unread = $('.inner a') [0].innerHTML.replace(' 条未读提醒', '')
+  var unread = $('.inner > a') [0].innerHTML.replace(' 条未读提醒', '')
   var notificationText = unread == '0' ? '' : unread;
 } else {
   var avater = '<a href="' + navbar[2] + '" class="top k_color_hover">' + navbar[2].innerHTML + '</a>';
