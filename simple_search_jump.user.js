@@ -3,7 +3,7 @@
 // @namespace       @caoyue
 // @license         MIT License
 // @description     百度、Google快捷跳转
-// @version         0.3
+// @version         0.4
 // @author          @caoyue
 // @include        *www.baidu.com/*
 // @include        *.google.*
@@ -11,7 +11,7 @@
 // @downloadURL    https://github.com/caoyue/userjs/raw/master/simple_search_jump.user.js
 // @updateURL      https://github.com/caoyue/userjs/raw/master/simple_search_jump.meta.js
 // @grant       none
-// @note        last updated 2015-01-11
+// @note        last updated 2015-03-20
 // @note        tested on Chrome 40 + Tampermonkey， Firefox 35 + GreaseMonkey
 // ==/UserScript==
 
@@ -155,7 +155,6 @@ function GoogleInit() {
 
 function BingInit() {
     var keyword = getBingKeyword(window.location.href);
-    document.getElementById('id_h').style.width = '100px';
     var t = document.getElementsByClassName('b_scopebar') [0].childNodes[0];
     for (var key in SEARCH_DICT) {
         if (key != 'Bing') {
@@ -194,7 +193,7 @@ function getGoogleKeyword(url) {
     //     var re = /&q=([\s\S]+?)&oq=/i;
     //     var r = url.match(re);
     //     return decodeURIComponent(r[1]);
-    var s = document.getElementById('gbqfq');
+    var s = document.getElementById('lst-ib');
     return s != null ? encodeURIComponent(s.value)  : '';
 }
 
