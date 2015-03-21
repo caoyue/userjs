@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             caoyue@v2ex
-// @name           V2EX_Helper
-// @version        1.7.1
+// @name           v2ex_helper
+// @version        1.8
 // @namespace      caoyue
 // @author         caoyue
 // @description    v2ex helper
@@ -12,22 +12,23 @@
 // @include        http://v2ex.com/*
 // @downloadURL    https://github.com/caoyue/userjs/raw/master/v2ex_helper.user.js
 // @updateURL      https://github.com/caoyue/userjs/raw/master/v2ex_helper.meta.js
-// @grant          none
+// @grant          GM_addStyle
 
 
 // ==/UserScript==
 // Author: caoyue
 // Created: 2012-04-11
-// Version: 1.7.1
-// Updated: 2015-01-21
+// Version: 1.8
+// Updated: 2015-03-21
 
-var REPLY_TYPE = 1; //TODO:评论显示方式.
 var REPLY_COUNT = 2; //只显示最靠近的两条评论
-var MAX_LENGTH = 300; //引用评论超过长度则截断
+var MAX_LENGTH = 200; //引用评论超过长度则截断
 var HIDE_TOPIC_CONTENT = false; //翻页后隐藏主题内容
 var REDIRECT = false; // www 自动跳转到裸域
 var CUSTOM_SEARCH = false;
 
+GM_addStyle('#replyToolTip {border-radius: 4px;font-size:14px;background-color:rgba(255,255,255,0.9);box-shadow:0 0 7px rgba(0, 0, 0, 0.6);max-width:550px;max-height:500px;padding:6px 10px;position:absolute;}' +
+            '#replyToolTip:after { content: "";position: absolute; width: 0;height: 0; border: 7px solid transparent;border-top-color: rgba(255,255,255,0.9);top: 100%;margin-left:10px;}');
 
 (function () {
     if (REDIRECT && location.host == 'www.v2ex.com') {
@@ -69,24 +70,25 @@ function reply() {
                 var content = '<strong>' + authorName + ':</strong><br />';
                 if (contentArray.length > REPLY_COUNT) {
                     for (var i = 0; i < REPLY_COUNT; i++) {
-                        content = content + '<p style=\'padding-bottom:5px;border-bottom:1px solid rgb(226, 226, 226);\'>' + contentArray[contentArray.length - REPLY_COUNT + i] + '</p>';
+                        content = content + '<p style=\'padding-bottom:5px;border-bottom:1px dashed rgb(226, 226, 226);\'>' + contentArray[contentArray.length - REPLY_COUNT + i] + '</p>';
                     }
                 }
                 else {
                     for (var x in contentArray) {
-                        content = content + '<p style=\'padding-bottom:5px;border-bottom:1px solid rgb(226, 226, 226);\'>' + contentArray[x] + '</p>';
+                        content = content + '<p style=\'padding-bottom:5px;border-bottom:1px dashed rgb(226, 226, 226);\'>' + contentArray[x] + '</p>';
                     }
                 }
                 var layer = creatDiv(content);
                 layer.style.display = 'block';
-                layer.style.left = e.pageX - 60 + 'px';
-                layer.style.top = e.pageY - layer.offsetHeight - 15 + 'px';
+                var abs = getPosition(link);
+                layer.style.left = abs.left - 15 + 'px';
+                layer.style.top = abs.top - layer.offsetHeight - link.offsetHeight/2 - 3 + 'px';
             }
         }
     });
     document.addEventListener('mouseout', function (e) {
-        if (document.getElementById('ReplyToolTip') != null) {
-            document.getElementById('ReplyToolTip').style.display = 'none';
+        if (document.getElementById('replyToolTip') != null) {
+            document.getElementById('replyToolTip').style.display = 'none';
         }
     });
 }
@@ -124,15 +126,14 @@ function getContent(originID, authorName) {
 }
 
 function creatDiv(content) {
-    var layer = document.getElementById('ReplyToolTip');
+    var layer = document.getElementById('replyToolTip');
     if (layer != null) {
         layer.innerHTML = content;
     }
     else {
         layer = document.createElement('div');
         document.body.appendChild(layer);
-        layer.setAttribute('id', 'ReplyToolTip');
-        layer.setAttribute('style', 'font-size:14px;background-color:rgba(255,255,255,0.9);box-shadow:0 0 10px rgba(0, 0, 0, 0.8);max-width:550px;max-height:500px;padding:6px 10px;position:absolute;')
+        layer.setAttribute('id', 'replyToolTip');
         layer.innerHTML = content;
     }
     return layer;
@@ -146,6 +147,17 @@ if (HIDE_TOPIC_CONTENT && window.location.href.indexOf('?p=') > 0 && window.loca
 // 感谢回复者时先确认
 var thankareas = document.getElementsByClassName('thank');
 for (var x in thankareas) {
-    var func = thankareas[x].getAttribute('onclick');
-    thankareas[x].setAttribute('onclick', 'if(confirm(\'予人玫瑰，手有余香\')){ ' + func + '}');
+    if(thankareas[x].text == "感谢回复者") {
+        var func = thankareas[x].getAttribute('onclick');
+        thankareas[x].setAttribute('onclick', 'if(confirm(\'予人玫瑰，手有余香\')){ ' + func + '}');
+    }
+}
+
+function getPosition(obj) {
+    var w = obj.offsetWidth, h = obj.offsetHeight;
+    for (var t = obj.offsetTop, l = obj.offsetLeft; obj = obj.offsetParent;) {
+        t += obj.offsetTop;
+        l += obj.offsetLeft;
+    }
+    return {left:l,top:t};
 }
