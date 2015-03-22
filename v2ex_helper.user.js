@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             caoyue@v2ex
 // @name           v2ex_helper
-// @version        1.8
+// @version        1.8.1
 // @namespace      caoyue
 // @author         caoyue
 // @description    v2ex helper
@@ -19,7 +19,7 @@
 // Author: caoyue
 // Created: 2012-04-11
 // Version: 1.8
-// Updated: 2015-03-21
+// Updated: 2015-03-22
 
 var REPLY_COUNT = 2; //只显示最靠近的两条评论
 var MAX_LENGTH = 200; //引用评论超过长度则截断
@@ -28,7 +28,8 @@ var REDIRECT = false; // www 自动跳转到裸域
 var CUSTOM_SEARCH = false;
 
 GM_addStyle('#replyToolTip {border-radius: 4px;font-size:14px;background-color:rgba(255,255,255,0.9);box-shadow:0 0 7px rgba(0, 0, 0, 0.6);max-width:550px;max-height:500px;padding:6px 10px;position:absolute;}' +
-            '#replyToolTip:after { content: "";position: absolute; width: 0;height: 0; border: 7px solid transparent;border-top-color: rgba(255,255,255,0.9);top: 100%;margin-left:10px;}');
+            '#replyToolTip:after { content: "";position: absolute; width: 0;height: 0; border: 7px solid transparent;border-top-color: rgba(255,255,255,0.9);top: 100%;margin-left:10px;}' +
+            '#replyToolTip img { max-width:360px !important; max-height:360px !important;}');
 
 (function () {
     if (REDIRECT && location.host == 'www.v2ex.com') {
@@ -68,14 +69,15 @@ function reply() {
                 var authorName = authorLink.innerHTML;
                 var contentArray = getContent(originID, authorName);
                 var content = '<strong>' + authorName + ':</strong><br />';
+                var dash = '<p style=\'padding-bottom:5px;border-bottom:1px dashed rgb(226, 226, 226);\'>';
                 if (contentArray.length > REPLY_COUNT) {
                     for (var i = 0; i < REPLY_COUNT; i++) {
-                        content = content + '<p style=\'padding-bottom:5px;border-bottom:1px dashed rgb(226, 226, 226);\'>' + contentArray[contentArray.length - REPLY_COUNT + i] + '</p>';
+                        content = content + (i == REPLY_COUNT - 1 ? '<p>' : dash) + contentArray[contentArray.length - REPLY_COUNT + i] + '</p>';
                     }
                 }
                 else {
                     for (var x in contentArray) {
-                        content = content + '<p style=\'padding-bottom:5px;border-bottom:1px dashed rgb(226, 226, 226);\'>' + contentArray[x] + '</p>';
+                        content = content +  (x == contentArray.length - 1 ? '<p>' : dash) + contentArray[x] + '</p>';
                     }
                 }
                 var layer = creatDiv(content);

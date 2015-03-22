@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             caoyue@v2ex
 // @name           v2ex_helper
-// @version        1.8
+// @version        1.8.1
 // @namespace      caoyue
 // @author         caoyue
 // @description    v2ex helper
