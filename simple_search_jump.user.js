@@ -3,13 +3,12 @@
 // @namespace       @caoyue
 // @license         MIT License
 // @description     百度、Google快捷跳转
-// @version         0.5.0
+// @version         0.5.1
 // @author          @caoyue
 // @include         *
 // @downloadURL     https://github.com/caoyue/userjs/raw/master/simple_search_jump.user.js
 // @updateURL       https://github.com/caoyue/userjs/raw/master/simple_search_jump.meta.js
-// @grant       none
-// @note        last updated 2015-04-01
+// @grant       GM_addStyle
 // @note        tested on Chrome 40 + Tampermonkey， Firefox 35 + GreaseMonkey
 // ==/UserScript==
 
@@ -97,6 +96,7 @@
                 return s != null ? encodeURIComponent(s.value)  : '';
             },
             init: function () {
+                GM_addStyle('.b_navbar{width:100% !important;}');
                 var word = this.keyword();
                 var t = document.getElementsByClassName('b_scopebar')[0].childNodes[0];
                 for (var i in search_dict) {
@@ -160,6 +160,14 @@
         }
     ];
 
+    /*********************************************************************
+    * Baidu 使用了 Ajax 无刷新加载页面，探测页面刷新比较麻烦；
+    * 而且同时存在几种刷新方式，尝试过了 onhashchange / history.pushState /
+    * 监视 DOMNodeInserted / 监视页面 TitleObserver 等，没有找到通用高效的处理方法；
+    * 于是使用了简单暴力无脑的 setInterval (￣△￣|||)
+    * 求其他方法XD
+    *********************************************************************/
+
     function Init(time) {
         var location = window.location;
         for (var i in search_dict) {
@@ -168,7 +176,7 @@
                 if (d.name == 'baidu') {
                     setInterval(function (j) {
                         search_dict[j].init();
-                    }, time,i);
+                    }, time, i);
                 }
                 else {
                     d.init();
@@ -176,14 +184,6 @@
             }
         }
     }
-
-    /*********************************************************************
-    * Baidu 使用了 Ajax 无刷新加载页面，探测页面刷新比较麻烦；
-    * 而且同时存在几种刷新方式，尝试过了 onhashchange / history.pushState /
-    * 监视 DOMNodeInserted / 监视页面 TitleObserver 等，没有找到通用高效的处理方法；
-    * 于是使用了简单暴力无脑的 setInterval (￣△￣|||)
-    * 求其他方法XD
-    *********************************************************************/
 
     Init(2000);
 
