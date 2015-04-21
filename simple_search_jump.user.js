@@ -3,7 +3,7 @@
 // @namespace       @caoyue
 // @license         MIT License
 // @description     百度、Google快捷跳转
-// @version         0.5.1
+// @version         0.5.2
 // @author          @caoyue
 // @include         *
 // @downloadURL     https://github.com/caoyue/userjs/raw/master/simple_search_jump.user.js
@@ -25,7 +25,7 @@
             },
             init: function () {
                 word = this.keyword();
-                var t = document.getElementById('hdtb_msb');
+                var t = document.getElementById('hdtb-msb');
                 for (var i in search_dict) {
                     var k = search_dict[i];
                     if (k.name != this.name) {
