@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             caoyue@v2ex
 // @name           v2ex_helper
-// @version        1.8.1
+// @version        1.8.2
 // @namespace      caoyue
 // @author         caoyue
 // @description    v2ex helper
@@ -18,8 +18,8 @@
 // ==/UserScript==
 // Author: caoyue
 // Created: 2012-04-11
-// Version: 1.8
-// Updated: 2015-03-22
+// Version: 1.8.2
+// Updated: 2015-05-29
 
 var REPLY_COUNT = 2; //只显示最靠近的两条评论
 var MAX_LENGTH = 200; //引用评论超过长度则截断
@@ -147,13 +147,13 @@ if (HIDE_TOPIC_CONTENT && window.location.href.indexOf('?p=') > 0 && window.loca
 }
 
 // 感谢回复者时先确认
-var thankareas = document.getElementsByClassName('thank');
-for (var x in thankareas) {
-    if(thankareas[x].text == "感谢回复者") {
-        var func = thankareas[x].getAttribute('onclick');
-        thankareas[x].setAttribute('onclick', 'if(confirm(\'予人玫瑰，手有余香\')){ ' + func + '}');
-    }
-}
+// var thankareas = document.getElementsByClassName('thank');
+// for (var x in thankareas) {
+//     if(thankareas[x].text == "感谢回复者") {
+//         var func = thankareas[x].getAttribute('onclick');
+//         thankareas[x].setAttribute('onclick', 'if(confirm(\'予人玫瑰，手有余香\')){ ' + func + '}');
+//     }
+// }
 
 function getPosition(obj) {
     var w = obj.offsetWidth, h = obj.offsetHeight;
