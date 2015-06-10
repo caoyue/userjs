@@ -96,7 +96,7 @@
                 return s != null ? encodeURIComponent(s.value)  : '';
             },
             init: function () {
-                GM_addStyle('.b_navbar{width:100% !important;}');
+                GM_addStyle('#b_header .b_scopebar, #b_header #id_h { top: 0; }');
                 var word = this.keyword();
                 var t = document.getElementsByClassName('b_scopebar')[0].childNodes[0];
                 for (var i in search_dict) {
