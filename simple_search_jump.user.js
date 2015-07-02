@@ -3,7 +3,7 @@
 // @namespace       @caoyue
 // @license         MIT License
 // @description     百度、Google快捷跳转
-// @version         0.5.2
+// @version         0.5.3
 // @author          @caoyue
 // @include         *
 // @downloadURL     https://github.com/caoyue/userjs/raw/master/simple_search_jump.user.js
@@ -19,6 +19,7 @@
             name: 'Google',
             search: 'https://www.google.com/search?newwindow=1&q={0}&oq={0}',
             url: /https?:\/\/(www|encrypted)\.google.(com|com\.hk|co\.jp)\//i,
+            instant: true,
             keyword: function () {
                 var s = document.getElementsByName('q') [0];
                 return s != null ? encodeURIComponent(s.value)  : '';
@@ -52,6 +53,7 @@
             name: 'baidu',
             search: 'https://www.baidu.com/#wd={0}&ie=utf-8',
             url: /https?:\/\/www.baidu.com\//i,
+            instant: true,
             keyword: function () {
                 var t = document.getElementById('kw');
                 if (t != null && t.value != '') {
@@ -91,12 +93,13 @@
             name: 'Bing',
             search: 'https://bing.com/search?q={0}',
             url: /https?:\/\/(www|global|cn).bing.com\//i,
+            instant: false,
             keyword: function () {
                 var s = document.getElementById('sb_form_q');
                 return s != null ? encodeURIComponent(s.value)  : '';
             },
             init: function () {
-                GM_addStyle('#b_header .b_scopebar, #b_header #id_h { top: 0; }');
+                GM_addStyle('#b_header .b_scopebar, #b_header #id_h { top: 0; } #id_h { margin-top:20px; }');
                 var word = this.keyword();
                 var t = document.getElementsByClassName('b_scopebar')[0].childNodes[0];
                 for (var i in search_dict) {
@@ -127,6 +130,7 @@
             name: 'DDG',
             search: 'https://duckduckgo.com/?q={0}',
             url: undefined,
+            instant: undefined,
             keyword: undefined,
             init: undefined
         },
@@ -134,6 +138,7 @@
             name: 'SO',
             search: 'http://stackoverflow.com/search?q={0}',
             url: undefined,
+            instant: undefined,
             keyword: undefined,
             init: undefined
         },
@@ -141,6 +146,7 @@
             name: 'Weibo',
             search: 'http://s.weibo.com/weibo/{0}',
             url: undefined,
+            instant: undefined,
             keyword: undefined,
             init: undefined
         },
@@ -148,6 +154,7 @@
             name: 'Twitter',
             search: 'https://twitter.com/search?q={0}',
             url: undefined,
+            instant: undefined,
             keyword: undefined,
             init: undefined
         },
@@ -155,25 +162,18 @@
             name: 'Zhihu',
             search: 'http://www.zhihu.com/search?q={0}&type=question',
             url: undefined,
+            instant: undefined,
             keyword: undefined,
             init: undefined
         }
     ];
-
-    /*********************************************************************
-    * Baidu 使用了 Ajax 无刷新加载页面，探测页面刷新比较麻烦；
-    * 而且同时存在几种刷新方式，尝试过了 onhashchange / history.pushState /
-    * 监视 DOMNodeInserted / 监视页面 TitleObserver 等，没有找到通用高效的处理方法；
-    * 于是使用了简单暴力无脑的 setInterval (￣△￣|||)
-    * 求其他方法XD
-    *********************************************************************/
 
     function Init(time) {
         var location = window.location;
         for (var i in search_dict) {
             var d = search_dict[i];
             if (d.url != undefined && d.init != undefined && d.url.test(location)) {
-                if (d.name == 'baidu') {
+                if (d.instant) {
                     setInterval(function (j) {
                         search_dict[j].init();
                     }, time, i);
@@ -181,6 +181,7 @@
                 else {
                     d.init();
                 }
+                break;
             }
         }
     }
