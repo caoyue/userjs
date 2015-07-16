@@ -32,7 +32,8 @@ Greasemonkey Scripts
   var SEARCH = "http://www.google.com/search?q=site:v2ex.com/t%20{{0}}"; //修改搜索引擎，关键字用{{0}}替换
 
   ```
-- 感谢回复增加一个确认弹出框<br/>
+- ~~感谢回复增加一个确认弹出框~~<br/>
+- 将链接转换为图片显示<br/>
 
 ### Image_Info.user.js
 快速查看图片信息

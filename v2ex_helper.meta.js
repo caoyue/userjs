@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             caoyue@v2ex
 // @name           v2ex_helper
-// @version        1.8.2
+// @version        1.9.1
 // @namespace      caoyue
 // @author         caoyue
 // @description    v2ex helper
@@ -13,3 +13,4 @@
 // @downloadURL    https://github.com/caoyue/userjs/raw/master/v2ex_helper.user.js
 // @updateURL      https://github.com/caoyue/userjs/raw/master/v2ex_helper.meta.js
 // @grant          GM_addStyle
+// ==/UserScript==

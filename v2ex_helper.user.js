@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             caoyue@v2ex
 // @name           v2ex_helper
-// @version        1.8.2
+// @version        1.9.1
 // @namespace      caoyue
 // @author         caoyue
 // @description    v2ex helper
@@ -13,18 +13,16 @@
 // @downloadURL    https://github.com/caoyue/userjs/raw/master/v2ex_helper.user.js
 // @updateURL      https://github.com/caoyue/userjs/raw/master/v2ex_helper.meta.js
 // @grant          GM_addStyle
-
-
 // ==/UserScript==
 // Author: caoyue
 // Created: 2012-04-11
-// Version: 1.8.2
-// Updated: 2015-05-29
+// Version: 1.9.1
+// Updated: 2015-07-16
 
 var REPLY_COUNT = 2; //只显示最靠近的两条评论
 var MAX_LENGTH = 200; //引用评论超过长度则截断
 var HIDE_TOPIC_CONTENT = false; //翻页后隐藏主题内容
-var REDIRECT = false; // www 自动跳转到裸域
+var REDIRECT = false; // 自动跳转到裸域
 var CUSTOM_SEARCH = false;
 
 GM_addStyle('#replyToolTip {border-radius: 4px;font-size:14px;background-color:rgba(255,255,255,0.9);box-shadow:0 0 7px rgba(0, 0, 0, 0.6);max-width:550px;max-height:500px;padding:6px 10px;position:absolute;}' +
@@ -35,11 +33,12 @@ GM_addStyle('#replyToolTip {border-radius: 4px;font-size:14px;background-color:r
     if (REDIRECT && location.host == 'www.v2ex.com') {
         location.href = location.href.replace(/www./, '');
     }
+    linksToImgs();
 }) ();
 
 if (CUSTOM_SEARCH) {
     //var SEARCH = "http://www.google.com/search?q=site:v2ex.com/t%20{{0}}"; //default
-    var SEARCH = 'https://www.bing.com/search?q=site%3Av2ex.com%2Ft+{{0}}'; //自定义搜索引擎
+    var SEARCH = 'https://www.bing.com/search?q=site%3Av2ex.com%2Ft+{{0}}'; //bing
     document.forms[0].onsubmit = function () {
         var q = document.getElementById('q');
         if (q.value != '') {
@@ -139,6 +138,17 @@ function creatDiv(content) {
         layer.innerHTML = content;
     }
     return layer;
+}
+
+function linksToImgs() {
+    var links = document.links;
+    for (x in links){
+        var link = links[x];
+        if (/^http.*\.(?:jpg|jpeg|jpe|bmp|png|gif)/i.test(link.href)
+            && !/<img\s/i.test(link.innerHTML)){
+            link.innerHTML = "<img title='" + link.href + "' src='" + link.href + "' />";
+        }
+    }
 }
 
 // 翻页后隐藏主题内容
