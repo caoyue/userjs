@@ -2,8 +2,8 @@
 // @name            simple search jump
 // @namespace       @caoyue
 // @license         MIT License
-// @description     百度、Google快捷跳转
-// @version         0.5.3
+// @description     搜索引擎快捷跳转
+// @version         0.5.4
 // @author          @caoyue
 // @include         *
 // @downloadURL     https://github.com/caoyue/userjs/raw/master/simple_search_jump.user.js

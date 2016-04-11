@@ -2,8 +2,8 @@
 // @name            simple search jump
 // @namespace       @caoyue
 // @license         MIT License
-// @description     百度、Google快捷跳转
-// @version         0.5.3
+// @description     搜索引擎快捷跳转
+// @version         0.5.4
 // @author          @caoyue
 // @include         *
 // @downloadURL     https://github.com/caoyue/userjs/raw/master/simple_search_jump.user.js
@@ -22,7 +22,7 @@
             instant: true,
             keyword: function () {
                 var s = document.getElementsByName('q') [0];
-                return s != null ? encodeURIComponent(s.value)  : '';
+                return s !== null ? encodeURIComponent(s.value)  : '';
             },
             init: function () {
                 word = this.keyword();
@@ -32,10 +32,10 @@
                     if (k.name != this.name) {
                         var jump = document.getElementById(k.name + 'Jump');
                         var rUrl = k.search.replace(/\{0\}/g, word);
-                        if (jump != null) {
+                        if (jump !== null) {
                             jump.href = rUrl;
                         }
-                        else if (t != null) {
+                        else if (t !== null) {
                             jump = document.createElement('a');
                             jump.id = k.name + 'Jump';
                             jump.text = k.name;
@@ -56,14 +56,12 @@
             instant: true,
             keyword: function () {
                 var t = document.getElementById('kw');
-                if (t != null && t.value != '') {
+                if (t !== null && t.value !== '') {
                     return encodeURIComponent(t.value);
                 }
                 var re = /wd=([\s\S]+?)&/i;
                 var r = url.match(re);
-                return r != null ? r[1] : '';
-                var s = document.getElementsByName('wd') [0];
-                return s != null ? encodeURIComponent(s.value)  : '';
+                return r !== null ? r[1] : '';
             },
             init: function () {
                 var word = this.keyword();
@@ -73,7 +71,7 @@
                     if (k.name != this.name) {
                         var rUrl = k.search.replace(/\{0\}/g, word);
                         var jump = document.getElementById(k.name + 'Jump');
-                        if (jump != null) {
+                        if (jump !== null) {
                             jump.href = rUrl;
                         }
                         else {
@@ -82,7 +80,7 @@
                             jump.text = k.name;
                             jump.target = '_blank';
                             jump.href = rUrl;
-                            jump.style = 'margin-left:15px;'
+                            jump.style = 'margin-left:15px;';
                             t.appendChild(jump);
                         }
                     }
@@ -96,22 +94,23 @@
             instant: false,
             keyword: function () {
                 var s = document.getElementById('sb_form_q');
-                return s != null ? encodeURIComponent(s.value)  : '';
+                return s !== null ? encodeURIComponent(s.value)  : '';
             },
             init: function () {
-                GM_addStyle('#b_header .b_scopebar, #b_header #id_h { top: 0; } #id_h { margin-top:20px; }');
+                GM_addStyle('#id_h {top: -35px !important;}');
                 var word = this.keyword();
                 var t = document.getElementsByClassName('b_scopebar')[0].childNodes[0];
+                console.log(t);
                 for (var i in search_dict) {
                     var k = search_dict[i];
                     if (k.name != this.name) {
                         var jump = document.getElementById(k.name + 'Jump');
                         var rUrl = k.search.replace(/\{0\}/g, word);
-                        if (jump != null) {
+                        if (jump !== null) {
                             jump.href = rUrl;
                         }
                         else {
-                            if (t != null) {
+                            if (t !== null) {
                                 var d = document.createElement('li');
                                 t.appendChild(d);
                                 jump = document.createElement('a');
@@ -172,7 +171,7 @@
         var location = window.location;
         for (var i in search_dict) {
             var d = search_dict[i];
-            if (d.url != undefined && d.init != undefined && d.url.test(location)) {
+            if (d.url !== undefined && d.init !== undefined && d.url.test(location)) {
                 if (d.instant) {
                     setInterval(function (j) {
                         search_dict[j].init();

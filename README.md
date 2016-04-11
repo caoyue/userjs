@@ -41,4 +41,3 @@ Greasemonkey Scripts
 
 ### simple_search_jump.user.js
 搜索引擎快速跳转
-
