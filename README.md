@@ -41,3 +41,6 @@ Greasemonkey Scripts
 
 ### simple_search_jump.user.js
 搜索引擎快速跳转
+
+### douyu_in_video_player
+使用本地播放器打开斗鱼直播流
