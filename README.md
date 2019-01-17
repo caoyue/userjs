@@ -1,11 +1,6 @@
 
 Greasemonkey Scripts
 ===============================
-### v2ex.k
-- 原作者 kokdemo@v2ex
-- 修改自原 Chrome Extension [https://github.com/kokdemo/v2ex.k](https://github.com/kokdemo/v2ex.k)
-- 一切权利归原作者所有
-- GreaseMonkey 菜单 ```User Script Commands``` 可以切换 Ajax 和 iframe 加载方式
 
 ### v2ex_helper.user.js
 - 显示引用的评论<br/>

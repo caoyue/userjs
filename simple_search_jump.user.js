@@ -3,7 +3,7 @@
 // @namespace       @caoyue
 // @license         MIT License
 // @description     搜索引擎快捷跳转
-// @version         0.5.4
+// @version         0.5.5
 // @author          @caoyue
 // @include         *
 // @downloadURL     https://github.com/caoyue/userjs/raw/master/simple_search_jump.user.js
@@ -13,25 +13,26 @@
 // ==/UserScript==
 
 (function () {
+    'use strict';
 
-    var search_dict = [
+    let search_dict = [
         {
             name: 'Google',
             search: 'https://www.google.com/search?newwindow=1&q={0}&oq={0}',
             url: /https?:\/\/(www|encrypted)\.google.(com|com\.hk|co\.jp)\//i,
             instant: true,
             keyword: function () {
-                var s = document.getElementsByName('q') [0];
-                return s !== null ? encodeURIComponent(s.value)  : '';
+                let s = document.getElementsByName('q')[0];
+                return s !== null ? encodeURIComponent(s.value) : '';
             },
             init: function () {
-                word = this.keyword();
-                var t = document.getElementById('hdtb-msb');
-                for (var i in search_dict) {
-                    var k = search_dict[i];
+                let word = this.keyword();
+                let t = document.getElementById('hdtb-msb');
+                for (let i in search_dict) {
+                    let k = search_dict[i];
                     if (k.name != this.name) {
-                        var jump = document.getElementById(k.name + 'Jump');
-                        var rUrl = k.search.replace(/\{0\}/g, word);
+                        let jump = document.getElementById(k.name + 'Jump');
+                        let rUrl = k.search.replace(/\{0\}/g, word);
                         if (jump !== null) {
                             jump.href = rUrl;
                         }
@@ -55,22 +56,22 @@
             url: /https?:\/\/www.baidu.com\//i,
             instant: true,
             keyword: function () {
-                var t = document.getElementById('kw');
+                let t = document.getElementById('kw');
                 if (t !== null && t.value !== '') {
                     return encodeURIComponent(t.value);
                 }
-                var re = /wd=([\s\S]+?)&/i;
-                var r = url.match(re);
+                let re = /wd=([\s\S]+?)&/i;
+                let r = this.url.match(re);
                 return r !== null ? r[1] : '';
             },
             init: function () {
-                var word = this.keyword();
-                var t = document.getElementById('s_tab');
-                for (var i in search_dict) {
-                    var k = search_dict[i];
+                let word = this.keyword();
+                let t = document.getElementsByClassName('s_tab_inner')[0];
+                for (let i in search_dict) {
+                    let k = search_dict[i];
                     if (k.name != this.name) {
-                        var rUrl = k.search.replace(/\{0\}/g, word);
-                        var jump = document.getElementById(k.name + 'Jump');
+                        let rUrl = k.search.replace(/\{0\}/g, word);
+                        let jump = document.getElementById(k.name + 'Jump');
                         if (jump !== null) {
                             jump.href = rUrl;
                         }
@@ -93,25 +94,25 @@
             url: /https?:\/\/(www|global|cn).bing.com\//i,
             instant: false,
             keyword: function () {
-                var s = document.getElementById('sb_form_q');
-                return s !== null ? encodeURIComponent(s.value)  : '';
+                let s = document.getElementById('sb_form_q');
+                return s !== null ? encodeURIComponent(s.value) : '';
             },
             init: function () {
-                GM_addStyle('#id_h {top: -35px !important;}');
-                var word = this.keyword();
-                var t = document.getElementsByClassName('b_scopebar')[0].childNodes[0];
+                GM_addStyle('#ev_trans_btn_group{display:none !important;}');
+                let word = this.keyword();
+                let t = document.getElementsByClassName('b_scopebar')[0].childNodes[0];
                 console.log(t);
-                for (var i in search_dict) {
-                    var k = search_dict[i];
+                for (let i in search_dict) {
+                    let k = search_dict[i];
                     if (k.name != this.name) {
-                        var jump = document.getElementById(k.name + 'Jump');
-                        var rUrl = k.search.replace(/\{0\}/g, word);
+                        let jump = document.getElementById(k.name + 'Jump');
+                        let rUrl = k.search.replace(/\{0\}/g, word);
                         if (jump !== null) {
                             jump.href = rUrl;
                         }
                         else {
                             if (t !== null) {
-                                var d = document.createElement('li');
+                                let d = document.createElement('li');
                                 t.appendChild(d);
                                 jump = document.createElement('a');
                                 jump.id = k.name + 'Jump';
@@ -168,9 +169,9 @@
     ];
 
     function Init(time) {
-        var location = window.location;
-        for (var i in search_dict) {
-            var d = search_dict[i];
+        let location = window.location;
+        for (let i in search_dict) {
+            let d = search_dict[i];
             if (d.url !== undefined && d.init !== undefined && d.url.test(location)) {
                 if (d.instant) {
                     setInterval(function (j) {
@@ -185,6 +186,6 @@
         }
     }
 
-    Init(2000);
+    Init(1000);
 
-}) ();
+})();
