@@ -3,7 +3,7 @@
 // @namespace       @caoyue
 // @license         MIT License
 // @description     搜索引擎快捷跳转
-// @version         0.5.5
+// @version         0.5.6
 // @author          @caoyue
 // @include         *
 // @downloadURL     https://github.com/caoyue/userjs/raw/master/simple_search_jump.user.js
